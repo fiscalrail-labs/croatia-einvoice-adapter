@@ -1,0 +1,34 @@
+{
+  "artifact_version": "0.2.0",
+  "status": "deployment_ready_development_preview",
+  "production_ready": false,
+  "completed": [
+    "FastAPI service",
+    "JSON-to-UBL generation",
+    "deterministic preview validation",
+    "direct API-key protection",
+    "RapidAPI proxy-secret support",
+    "request-size enforcement",
+    "secure XML parser configuration",
+    "Dockerfile with non-root runtime and health check",
+    "Render Blueprint",
+    "OpenAPI marketplace import",
+    "smoke-test script",
+    "automated test workflow",
+    "development-preview marketplace copy"
+  ],
+  "verified": {
+    "automated_tests": 11,
+    "local_protected_smoke_test": "passed",
+    "unauthorized_request_test": "passed"
+  },
+  "account_owner_actions": [
+    "Place repository in an authenticated source-control account",
+    "Create the hosting service from render.yaml",
+    "Copy the generated DIRECT_API_KEY",
+    "Create the RapidAPI provider listing",
+    "Set RAPIDAPI_PROXY_SECRET in the hosting environment",
+    "Complete marketplace identity and payout details"
+  ],
+  "commercial_guardrail": "Publish only as a free development preview until the complete official Croatian production validation stack is integrated and independently tested."
+}

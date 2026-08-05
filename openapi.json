@@ -1,0 +1,719 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Croatia eInvoice Adapter API",
+    "description": "Developer preview: structured JSON in, Croatian UBL invoice XML and deterministic preflight findings out. This service is not yet a certified production-compliance engine and must not be used as the sole basis for submitting live fiscal invoices.",
+    "contact": {
+      "name": "API operator"
+    },
+    "license": {
+      "name": "Proprietary developer preview"
+    },
+    "version": "0.2.0"
+  },
+  "paths": {
+    "/health": {
+      "get": {
+        "summary": "Health",
+        "operationId": "health_health_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Health Health Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/info": {
+      "get": {
+        "summary": "Info",
+        "operationId": "info_v1_info_get",
+        "parameters": [
+          {
+            "name": "X-API-Key",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Api-Key"
+            }
+          },
+          {
+            "name": "X-RapidAPI-Proxy-Secret",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Rapidapi-Proxy-Secret"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Info V1 Info Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/hr/invoices/generate": {
+      "post": {
+        "summary": "Generate Invoice",
+        "operationId": "generate_invoice_v1_hr_invoices_generate_post",
+        "parameters": [
+          {
+            "name": "X-API-Key",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Api-Key"
+            }
+          },
+          {
+            "name": "X-RapidAPI-Proxy-Secret",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Rapidapi-Proxy-Secret"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InvoiceRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PreflightResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/hr/invoices/validate": {
+      "post": {
+        "summary": "Validate Invoice",
+        "operationId": "validate_invoice_v1_hr_invoices_validate_post",
+        "parameters": [
+          {
+            "name": "X-API-Key",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Api-Key"
+            }
+          },
+          {
+            "name": "X-RapidAPI-Proxy-Secret",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Rapidapi-Proxy-Secret"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/XmlValidationRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationResult"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/hr/invoices/preflight": {
+      "post": {
+        "summary": "Preflight Invoice",
+        "operationId": "preflight_invoice_v1_hr_invoices_preflight_post",
+        "parameters": [
+          {
+            "name": "X-API-Key",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Api-Key"
+            }
+          },
+          {
+            "name": "X-RapidAPI-Proxy-Secret",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Rapidapi-Proxy-Secret"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InvoiceRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PreflightResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Address": {
+        "properties": {
+          "street": {
+            "type": "string",
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Street"
+          },
+          "city": {
+            "type": "string",
+            "maxLength": 100,
+            "minLength": 1,
+            "title": "City"
+          },
+          "postal_code": {
+            "type": "string",
+            "maxLength": 20,
+            "minLength": 2,
+            "title": "Postal Code"
+          },
+          "country_code": {
+            "type": "string",
+            "const": "HR",
+            "title": "Country Code",
+            "default": "HR"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "street",
+          "city",
+          "postal_code"
+        ],
+        "title": "Address"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "InvoiceLine": {
+        "properties": {
+          "description": {
+            "type": "string",
+            "maxLength": 500,
+            "minLength": 1,
+            "title": "Description"
+          },
+          "quantity": {
+            "anyOf": [
+              {
+                "type": "number",
+                "exclusiveMinimum": 0.0
+              },
+              {
+                "type": "string",
+                "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,20}|(?=[\\d.]{1,31}0*$)\\d{0,20}\\.\\d{0,10}0*$)"
+              }
+            ],
+            "title": "Quantity"
+          },
+          "unit_price": {
+            "anyOf": [
+              {
+                "type": "number",
+                "exclusiveMinimum": 0.0
+              },
+              {
+                "type": "string",
+                "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,20}|(?=[\\d.]{1,31}0*$)\\d{0,20}\\.\\d{0,10}0*$)"
+              }
+            ],
+            "title": "Unit Price"
+          },
+          "unit_code": {
+            "type": "string",
+            "pattern": "^[A-Z0-9]{1,8}$",
+            "title": "Unit Code",
+            "default": "H87"
+          },
+          "vat_rate": {
+            "type": "integer",
+            "enum": [
+              5,
+              13,
+              25
+            ],
+            "title": "Vat Rate",
+            "default": 25
+          },
+          "kpd_code": {
+            "type": "string",
+            "title": "Kpd Code"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "description",
+          "quantity",
+          "unit_price",
+          "kpd_code"
+        ],
+        "title": "InvoiceLine"
+      },
+      "InvoiceRequest": {
+        "properties": {
+          "invoice_number": {
+            "type": "string",
+            "maxLength": 100,
+            "minLength": 1,
+            "pattern": "^\\S+$",
+            "title": "Invoice Number"
+          },
+          "issue_date": {
+            "type": "string",
+            "format": "date",
+            "title": "Issue Date"
+          },
+          "issue_time": {
+            "type": "string",
+            "format": "time",
+            "title": "Issue Time"
+          },
+          "due_date": {
+            "type": "string",
+            "format": "date",
+            "title": "Due Date"
+          },
+          "delivery_date": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Delivery Date"
+          },
+          "profile_id": {
+            "type": "string",
+            "maxLength": 200,
+            "pattern": "^(P(?:[1-9]|1[0-2])|P99:.+)$",
+            "title": "Profile Id",
+            "default": "P1"
+          },
+          "currency": {
+            "type": "string",
+            "const": "EUR",
+            "title": "Currency",
+            "default": "EUR"
+          },
+          "supplier": {
+            "$ref": "#/components/schemas/Party"
+          },
+          "customer": {
+            "$ref": "#/components/schemas/Party"
+          },
+          "supplier_operator_name": {
+            "type": "string",
+            "maxLength": 100,
+            "minLength": 1,
+            "title": "Supplier Operator Name",
+            "default": "Automated system"
+          },
+          "payment_id": {
+            "type": "string",
+            "maxLength": 100,
+            "minLength": 1,
+            "title": "Payment Id"
+          },
+          "supplier_iban": {
+            "type": "string",
+            "title": "Supplier Iban"
+          },
+          "lines": {
+            "items": {
+              "$ref": "#/components/schemas/InvoiceLine"
+            },
+            "type": "array",
+            "maxItems": 500,
+            "minItems": 1,
+            "title": "Lines"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "invoice_number",
+          "issue_date",
+          "issue_time",
+          "due_date",
+          "supplier",
+          "customer",
+          "payment_id",
+          "supplier_iban",
+          "lines"
+        ],
+        "title": "InvoiceRequest"
+      },
+      "Party": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Name"
+          },
+          "oib": {
+            "type": "string",
+            "title": "Oib"
+          },
+          "address": {
+            "$ref": "#/components/schemas/Address"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "name",
+          "oib",
+          "address"
+        ],
+        "title": "Party"
+      },
+      "PreflightResponse": {
+        "properties": {
+          "xml": {
+            "type": "string",
+            "title": "Xml"
+          },
+          "validation": {
+            "$ref": "#/components/schemas/ValidationResult"
+          },
+          "totals": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "type": "object",
+            "title": "Totals"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "xml",
+          "validation",
+          "totals"
+        ],
+        "title": "PreflightResponse"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          },
+          "input": {
+            "title": "Input"
+          },
+          "ctx": {
+            "type": "object",
+            "title": "Context"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
+      },
+      "ValidationFinding": {
+        "properties": {
+          "rule_id": {
+            "type": "string",
+            "title": "Rule Id"
+          },
+          "severity": {
+            "type": "string",
+            "enum": [
+              "fatal",
+              "error",
+              "warning"
+            ],
+            "title": "Severity"
+          },
+          "path": {
+            "type": "string",
+            "title": "Path"
+          },
+          "message": {
+            "type": "string",
+            "title": "Message"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "rule_id",
+          "severity",
+          "path",
+          "message"
+        ],
+        "title": "ValidationFinding"
+      },
+      "ValidationResult": {
+        "properties": {
+          "valid": {
+            "type": "boolean",
+            "title": "Valid"
+          },
+          "profile": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Profile"
+          },
+          "findings": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationFinding"
+            },
+            "type": "array",
+            "title": "Findings"
+          },
+          "checks_run": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Checks Run"
+          },
+          "production_ready": {
+            "type": "boolean",
+            "title": "Production Ready",
+            "default": false
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "valid",
+          "profile",
+          "findings",
+          "checks_run"
+        ],
+        "title": "ValidationResult"
+      },
+      "XmlValidationRequest": {
+        "properties": {
+          "xml": {
+            "type": "string",
+            "maxLength": 2000000,
+            "minLength": 1,
+            "title": "Xml"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "xml"
+        ],
+        "title": "XmlValidationRequest"
+      }
+    }
+  }
+}
