@@ -1,0 +1,31 @@
+name: Unpack project
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  unpack:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Unpack project archive
+        run: |
+          unzip -o croatia-einvoice-adapter-deployable-v0.2.0.zip -d extracted
+          shopt -s dotglob
+          cp -R extracted/croatia-validator-prototype/* .
+          rm -rf extracted
+          rm croatia-einvoice-adapter-deployable-v0.2.0.zip
+
+      - name: Commit unpacked files
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git diff --cached --quiet || git commit -m "Unpack project files"
+          git push
