@@ -1,0 +1,42 @@
+{
+  "invoice_number": "INV-2026-0001",
+  "issue_date": "2026-08-04",
+  "issue_time": "10:30:00",
+  "due_date": "2026-08-19",
+  "delivery_date": "2026-08-04",
+  "profile_id": "P1",
+  "currency": "EUR",
+  "supplier": {
+    "name": "Example Supplier d.o.o.",
+    "oib": "12345678903",
+    "address": {
+      "street": "Ulica 1",
+      "city": "Zagreb",
+      "postal_code": "10000",
+      "country_code": "HR"
+    }
+  },
+  "customer": {
+    "name": "Example Customer d.o.o.",
+    "oib": "11111111119",
+    "address": {
+      "street": "Ulica 2",
+      "city": "Rijeka",
+      "postal_code": "51000",
+      "country_code": "HR"
+    }
+  },
+  "supplier_operator_name": "Automated system",
+  "payment_id": "HR00 20260001",
+  "supplier_iban": "HR1210010051863000160",
+  "lines": [
+    {
+      "description": "Software integration service",
+      "quantity": "1",
+      "unit_price": "100.00",
+      "unit_code": "H87",
+      "vat_rate": 25,
+      "kpd_code": "62.20.20"
+    }
+  ]
+}
