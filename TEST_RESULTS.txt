@@ -1,2 +1,7 @@
+FiscalRail Croatia eInvoice Adapter v0.3.0 release-candidate checks
+
 ...........                                                              [100%]
 11 passed in 0.27s
+python compileall: passed
+node worker syntax: passed
+Docker integration: must run in GitHub/Render because this build environment has no external registry access.

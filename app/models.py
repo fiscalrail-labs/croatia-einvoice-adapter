@@ -3,7 +3,7 @@ from __future__ import annotations
 import re
 from datetime import date, time
 from decimal import Decimal
-from typing import Annotated, Literal
+from typing import Annotated, Any, Literal
 
 from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
 
@@ -14,18 +14,15 @@ IBAN_RE = re.compile(r"^[A-Z]{2}\d{2}[A-Z0-9]{11,30}$")
 
 
 def is_valid_oib(value: str) -> bool:
-    """Validate a Croatian OIB using the ISO 7064 MOD 11,10 algorithm."""
     value = value.removeprefix("HR")
     if not OIB_RE.fullmatch(value):
         return False
-
     intermediary = 10
     for digit in value[:10]:
         intermediary = (intermediary + int(digit)) % 10
         if intermediary == 0:
             intermediary = 10
         intermediary = (intermediary * 2) % 11
-
     control = 11 - intermediary
     if control == 10:
         control = 0
@@ -33,7 +30,6 @@ def is_valid_oib(value: str) -> bool:
 
 
 def is_valid_iban(value: str) -> bool:
-    """Validate an IBAN using ISO 13616 MOD-97."""
     compact = re.sub(r"\s+", "", value).upper()
     if not IBAN_RE.fullmatch(compact):
         return False
@@ -127,21 +123,31 @@ class InvoiceRequest(StrictModel):
 
 class XmlValidationRequest(StrictModel):
     xml: str = Field(min_length=1, max_length=2_000_000)
+    language: Literal["en", "hr"] = "en"
+    max_issues: int = Field(default=200, ge=0, le=1000)
 
 
 class ValidationFinding(StrictModel):
     rule_id: str
-    severity: Literal["fatal", "error", "warning"]
+    severity: Literal["fatal", "error", "warning", "info"]
+    profile: str = "unknown"
+    business_terms: list[str] = Field(default_factory=list)
     path: str
+    line: int | None = None
+    column: int | None = None
     message: str
+    hint: str | None = None
 
 
 class ValidationResult(StrictModel):
     valid: bool
-    profile: str | None
+    profile: str | None = "hr"
+    profiles: list[dict[str, Any]] = Field(default_factory=list)
     findings: list[ValidationFinding]
     checks_run: list[str]
     production_ready: bool = False
+    engine: str = "fiscalrail-legacy/0.2.0"
+    summary: dict[str, Any] = Field(default_factory=dict)
 
 
 class PreflightResponse(StrictModel):

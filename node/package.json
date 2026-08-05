@@ -1,0 +1,12 @@
+{
+  "name": "fiscalrail-official-validator-worker",
+  "private": true,
+  "version": "0.3.0",
+  "type": "module",
+  "engines": {"node": ">=20.10"},
+  "dependencies": {
+    "verifaktura": "0.1.8",
+    "@verifaktura/cius-hr": "0.1.8",
+    "@verifaktura/build": "0.1.8"
+  }
+}

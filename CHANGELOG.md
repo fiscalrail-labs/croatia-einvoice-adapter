@@ -1,13 +1,15 @@
 # Changelog
 
-## 0.2.0 - 2026-08-04
+## 0.3.0 - 2026-08-05
 
-- Added deployment-safe API authentication.
-- Added RapidAPI proxy-secret verification.
-- Added request-size limits and standardized 401/413 errors.
-- Added request ID, processing-time, no-cache, and nosniff response headers.
-- Added `/v1/info` and expanded `/health` metadata.
-- Added Render Blueprint configuration.
-- Added GitHub Actions, smoke test, environment template, and marketplace listing draft.
-- Expanded test suite to eleven passing tests.
-- Preserved the explicit `production_ready: false` safety marker.
+- Added official Croatian UBL 2.1 XSD validation sourced from the Tax Administration.
+- Added persistent Node validation worker using EN 16931 and Croatian CIUS/EXT Schematron artefacts.
+- Replaced production XML generation with `@verifaktura/build`.
+- Added dynamic `/ready` health gate and official artefact SHA-256 reporting.
+- Disabled hand-written legacy validation in production.
+- Added weekly Docker integration testing against current official artefacts.
+- Preserved direct API-key and RapidAPI proxy-secret authentication.
+
+## 0.2.0 - 2026-08-05
+
+- Hardened developer-preview deployment with API authentication and request limits.

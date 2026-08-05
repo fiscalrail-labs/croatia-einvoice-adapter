@@ -2,14 +2,14 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Croatia eInvoice Adapter API",
-    "description": "Developer preview: structured JSON in, Croatian UBL invoice XML and deterministic preflight findings out. This service is not yet a certified production-compliance engine and must not be used as the sole basis for submitting live fiscal invoices.",
+    "description": "JSON-to-UBL generation and preflight validation using the official UBL 2.1 schema, EN 16931 rules, and Croatian CIUS/EXT rules. Readiness is exposed at /ready; paid production traffic must be blocked unless all engines are ready.",
     "contact": {
-      "name": "API operator"
+      "name": "FiscalRail Labs"
     },
     "license": {
-      "name": "Proprietary developer preview"
+      "name": "Proprietary API; third-party validation artefacts retain source licences"
     },
-    "version": "0.2.0"
+    "version": "0.3.0"
   },
   "paths": {
     "/health": {
@@ -32,63 +32,35 @@
         }
       }
     },
+    "/ready": {
+      "get": {
+        "summary": "Readiness",
+        "operationId": "readiness_ready_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
     "/v1/info": {
       "get": {
         "summary": "Info",
         "operationId": "info_v1_info_get",
-        "parameters": [
-          {
-            "name": "X-API-Key",
-            "in": "header",
-            "required": false,
-            "schema": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "null"
-                }
-              ],
-              "title": "X-Api-Key"
-            }
-          },
-          {
-            "name": "X-RapidAPI-Proxy-Secret",
-            "in": "header",
-            "required": false,
-            "schema": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "null"
-                }
-              ],
-              "title": "X-Rapidapi-Proxy-Secret"
-            }
-          }
-        ],
         "responses": {
           "200": {
             "description": "Successful Response",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
                   "additionalProperties": true,
+                  "type": "object",
                   "title": "Response Info V1 Info Get"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
                 }
               }
             }
@@ -100,49 +72,15 @@
       "post": {
         "summary": "Generate Invoice",
         "operationId": "generate_invoice_v1_hr_invoices_generate_post",
-        "parameters": [
-          {
-            "name": "X-API-Key",
-            "in": "header",
-            "required": false,
-            "schema": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "null"
-                }
-              ],
-              "title": "X-Api-Key"
-            }
-          },
-          {
-            "name": "X-RapidAPI-Proxy-Secret",
-            "in": "header",
-            "required": false,
-            "schema": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "null"
-                }
-              ],
-              "title": "X-Rapidapi-Proxy-Secret"
-            }
-          }
-        ],
         "requestBody": {
-          "required": true,
           "content": {
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/InvoiceRequest"
               }
             }
-          }
+          },
+          "required": true
         },
         "responses": {
           "200": {
@@ -172,49 +110,15 @@
       "post": {
         "summary": "Validate Invoice",
         "operationId": "validate_invoice_v1_hr_invoices_validate_post",
-        "parameters": [
-          {
-            "name": "X-API-Key",
-            "in": "header",
-            "required": false,
-            "schema": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "null"
-                }
-              ],
-              "title": "X-Api-Key"
-            }
-          },
-          {
-            "name": "X-RapidAPI-Proxy-Secret",
-            "in": "header",
-            "required": false,
-            "schema": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "null"
-                }
-              ],
-              "title": "X-Rapidapi-Proxy-Secret"
-            }
-          }
-        ],
         "requestBody": {
-          "required": true,
           "content": {
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/XmlValidationRequest"
               }
             }
-          }
+          },
+          "required": true
         },
         "responses": {
           "200": {
@@ -244,49 +148,15 @@
       "post": {
         "summary": "Preflight Invoice",
         "operationId": "preflight_invoice_v1_hr_invoices_preflight_post",
-        "parameters": [
-          {
-            "name": "X-API-Key",
-            "in": "header",
-            "required": false,
-            "schema": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "null"
-                }
-              ],
-              "title": "X-Api-Key"
-            }
-          },
-          {
-            "name": "X-RapidAPI-Proxy-Secret",
-            "in": "header",
-            "required": false,
-            "schema": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "null"
-                }
-              ],
-              "title": "X-Rapidapi-Proxy-Secret"
-            }
-          }
-        ],
         "requestBody": {
-          "required": true,
           "content": {
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/InvoiceRequest"
               }
             }
-          }
+          },
+          "required": true
         },
         "responses": {
           "200": {
@@ -628,17 +498,63 @@
             "enum": [
               "fatal",
               "error",
-              "warning"
+              "warning",
+              "info"
             ],
             "title": "Severity"
+          },
+          "profile": {
+            "type": "string",
+            "title": "Profile",
+            "default": "unknown"
+          },
+          "business_terms": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Business Terms"
           },
           "path": {
             "type": "string",
             "title": "Path"
           },
+          "line": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Line"
+          },
+          "column": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Column"
+          },
           "message": {
             "type": "string",
             "title": "Message"
+          },
+          "hint": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Hint"
           }
         },
         "additionalProperties": false,
@@ -666,7 +582,16 @@
                 "type": "null"
               }
             ],
-            "title": "Profile"
+            "title": "Profile",
+            "default": "hr"
+          },
+          "profiles": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "type": "array",
+            "title": "Profiles"
           },
           "findings": {
             "items": {
@@ -686,13 +611,22 @@
             "type": "boolean",
             "title": "Production Ready",
             "default": false
+          },
+          "engine": {
+            "type": "string",
+            "title": "Engine",
+            "default": "fiscalrail-legacy/0.2.0"
+          },
+          "summary": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Summary"
           }
         },
         "additionalProperties": false,
         "type": "object",
         "required": [
           "valid",
-          "profile",
           "findings",
           "checks_run"
         ],
@@ -705,6 +639,22 @@
             "maxLength": 2000000,
             "minLength": 1,
             "title": "Xml"
+          },
+          "language": {
+            "type": "string",
+            "enum": [
+              "en",
+              "hr"
+            ],
+            "title": "Language",
+            "default": "en"
+          },
+          "max_issues": {
+            "type": "integer",
+            "maximum": 1000.0,
+            "minimum": 0.0,
+            "title": "Max Issues",
+            "default": 200
           }
         },
         "additionalProperties": false,

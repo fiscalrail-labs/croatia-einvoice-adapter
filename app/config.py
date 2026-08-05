@@ -38,7 +38,7 @@ def get_settings() -> Settings:
     return Settings(
         app_env=app_env,
         allow_unauthenticated=_as_bool("ALLOW_UNAUTHENTICATED", default_open),
-        direct_api_key=os.getenv("DIRECT_API_KEY") or None,
+        direct_api_key=os.getenv("DIRECT_API_KEY") or os.getenv("API_KEY") or None,
         rapidapi_proxy_secret=os.getenv("RAPIDAPI_PROXY_SECRET") or None,
         max_request_bytes=max_request_bytes,
     )

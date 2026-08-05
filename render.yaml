@@ -2,15 +2,19 @@ services:
   - type: web
     name: croatia-einvoice-adapter
     runtime: docker
-    plan: free
-    healthCheckPath: /health
+    plan: starter
+    healthCheckPath: /ready
     autoDeployTrigger: commit
     envVars:
       - key: APP_ENV
-        value: demo
+        value: production
       - key: ALLOW_UNAUTHENTICATED
         value: "false"
-      - key: DIRECT_API_KEY
+      - key: ALLOW_LEGACY_FALLBACK
+        value: "false"
+      - key: ENABLE_OFFICIAL_ENGINE
+        value: "true"
+      - key: API_KEY
         generateValue: true
       - key: MAX_REQUEST_BYTES
         value: "2097152"
