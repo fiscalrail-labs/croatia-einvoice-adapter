@@ -17,8 +17,8 @@ jobs:
       - name: Unpack project archive
         run: |
           unzip -o croatia-einvoice-adapter-deployable-v0.2.0.zip -d extracted
-          shopt -s dotglob
-          cp -R extracted/croatia-validator-prototype/* .
+          rm -rf extracted/croatia-validator-prototype/.github
+          cp -R extracted/croatia-validator-prototype/. .
           rm -rf extracted
           rm croatia-einvoice-adapter-deployable-v0.2.0.zip
 
